@@ -1,0 +1,12 @@
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\bin\Debug\net6.0\SprintApp.Core.deps.json
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\bin\Debug\net6.0\SprintApp.Core.dll
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\bin\Debug\net6.0\SprintApp.Core.pdb
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.csproj.AssemblyReference.cache
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.AssemblyInfoInputs.cache
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.AssemblyInfo.cs
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.csproj.CoreCompileInputs.cache
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.dll
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\obj\Debug\net6.0\refint\SprintApp.Core.dll
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.pdb
+C:\Users\adediranma\source\repos\SprintApp\SprintApp.Core\obj\Debug\net6.0\ref\SprintApp.Core.dll
