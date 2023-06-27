@@ -2,16 +2,13 @@
 {
     public class Response<T> where T : class
     {
-        private readonly string _Message;      
-        private readonly T _data;
-        private readonly int _statusCode;
-        private readonly bool _success;
+        public string Message;      
+        public T _data;
+        public int _statusCode;
+        public bool _success;
         public Response(string message, T data, int statusCode, bool success)
         {
-            _Message = message;
-            _data = data;
-            _statusCode = statusCode;
-            _success = success;
+           
         }
     }
 }

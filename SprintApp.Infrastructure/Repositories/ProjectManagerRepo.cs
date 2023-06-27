@@ -6,9 +6,10 @@ namespace SprintApp.Infrastructure.Repositories
 {
     public class ProjectManagerRepo : GenericRepo<ProjectManager>, IProjectManagerRepo
     {
-        public ProjectManagerRepo(ApplicationDbContext options) : base(options)
+        private readonly ApplicationDbContext _context;
+        public ProjectManagerRepo(ApplicationDbContext options, ApplicationDbContext context) : base(options)
         {
-
+            _context = context;
         }
     }
 }

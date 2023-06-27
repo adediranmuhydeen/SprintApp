@@ -53,13 +53,13 @@ namespace SprintApp.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync()
         {
             var entities = await _dbSet.ToListAsync();
             return entities;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> include = null)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> include = null)
         {
             IQueryable<T> query = _dbSet;
             if (predicate != null)
