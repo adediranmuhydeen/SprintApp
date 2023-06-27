@@ -5,7 +5,7 @@
         IVoteRepo voteRepo { get; }
         IVoterRepo voterRepo { get; }
         IProjectManagerRepo projectManagerRepo { get; }
-        ISprintRepo printRepo { get; }
+        ISprintRepo sprintRepo { get; }
         IUserStoryRepo userStoryRepo { get; }
         Task SaveChangesAsync();
     }
