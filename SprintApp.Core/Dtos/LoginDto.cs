@@ -9,5 +9,7 @@ namespace SprintApp.Core.Dtos
         public string? EmailId { get; set; }
         [Required(ErrorMessage = "Password is Required"), DisplayName("Password"), PasswordPropertyText]
         public string? Password { get; set; }
+        [Required(ErrorMessage ="Token Required"), DisplayName("Verification Token")]
+        public string? VerificationToken { get; set; }
     }
 }
