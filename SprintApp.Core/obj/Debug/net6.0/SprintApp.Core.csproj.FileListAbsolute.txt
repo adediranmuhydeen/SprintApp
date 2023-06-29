@@ -22,3 +22,15 @@ C:\Users\adediranma\Desktop\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.
 C:\Users\adediranma\Desktop\SprintApp\SprintApp.Core\obj\Debug\net6.0\refint\SprintApp.Core.dll
 C:\Users\adediranma\Desktop\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.pdb
 C:\Users\adediranma\Desktop\SprintApp\SprintApp.Core\obj\Debug\net6.0\ref\SprintApp.Core.dll
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.csproj.AssemblyReference.cache
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.AssemblyInfoInputs.cache
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.AssemblyInfo.cs
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.csproj.CoreCompileInputs.cache
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.dll
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\obj\Debug\net6.0\refint\SprintApp.Core.dll
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\obj\Debug\net6.0\SprintApp.Core.pdb
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\bin\Debug\net6.0\SprintApp.Core.deps.json
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\bin\Debug\net6.0\SprintApp.Core.dll
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\bin\Debug\net6.0\SprintApp.Core.pdb
+C:\Users\adediranma\Desktop\Planing\SprintApp\SprintApp.Core\obj\Debug\net6.0\ref\SprintApp.Core.dll

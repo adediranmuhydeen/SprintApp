@@ -3980,7 +3980,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "6.0.18",
+          "Microsoft.EntityFrameworkCore": "6.0.19",
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.19",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.18",
           "SprintApp.Core": "1.0.0"
         },
         "compile": {
@@ -3988,6 +3990,20 @@
         },
         "runtime": {
           "bin/placeholder/SprintApp.Infrastructure.dll": {}
+        }
+      },
+      "SprintApp.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "SprintApp.Core": "1.0.0",
+          "SprintApp.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SprintApp.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SprintApp.Services.dll": {}
         }
       }
     }
@@ -11136,6 +11152,11 @@
       "type": "project",
       "path": "../SprintApp.Infrastructure/SprintApp.Infrastructure.csproj",
       "msbuildProject": "../SprintApp.Infrastructure/SprintApp.Infrastructure.csproj"
+    },
+    "SprintApp.Services/1.0.0": {
+      "type": "project",
+      "path": "../SprintApp.Services/SprintApp.Services.csproj",
+      "msbuildProject": "../SprintApp.Services/SprintApp.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -11146,7 +11167,8 @@
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.18",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.14",
       "SprintApp.Core >= 1.0.0",
-      "SprintApp.Infrastructure >= 1.0.0"
+      "SprintApp.Infrastructure >= 1.0.0",
+      "SprintApp.Services >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -11156,11 +11178,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.UI\\SprintApp.UI.csproj",
+      "projectUniqueName": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.UI\\SprintApp.UI.csproj",
       "projectName": "SprintApp.UI",
-      "projectPath": "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.UI\\SprintApp.UI.csproj",
+      "projectPath": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.UI\\SprintApp.UI.csproj",
       "packagesPath": "C:\\Users\\adediranma\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.UI\\obj\\",
+      "outputPath": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.UI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -11182,11 +11204,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj": {
-              "projectPath": "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj"
+            "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj": {
+              "projectPath": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj"
             },
-            "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.Infrastructure\\SprintApp.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.Infrastructure\\SprintApp.Infrastructure.csproj"
+            "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Infrastructure\\SprintApp.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Infrastructure\\SprintApp.Infrastructure.csproj"
+            },
+            "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Services\\SprintApp.Services.csproj": {
+              "projectPath": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Services\\SprintApp.Services.csproj"
             }
           }
         }

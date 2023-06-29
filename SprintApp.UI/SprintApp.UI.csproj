@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SprintApp.Core\SprintApp.Core.csproj" />
     <ProjectReference Include="..\SprintApp.Infrastructure\SprintApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\SprintApp.Services\SprintApp.Services.csproj" />
   </ItemGroup>
 
 </Project>

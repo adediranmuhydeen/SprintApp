@@ -1,13 +1,9 @@
-﻿using SprintApp.Core.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SprintApp.Core.Dtos;
 
 namespace SprintApp.Core.IServices
 {
     public interface IProjectManagerService 
     {
+        Task<string> RegisterManager(RegistrationDto obj);
     }
 }

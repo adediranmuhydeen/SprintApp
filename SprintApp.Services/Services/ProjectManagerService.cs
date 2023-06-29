@@ -1,6 +1,8 @@
-﻿using SprintApp.Core.Dtos;
+﻿using Microsoft.EntityFrameworkCore;
+using SprintApp.Core.Dtos;
 using SprintApp.Core.Helper;
 using SprintApp.Core.IRepositories;
+using SprintApp.Core.IServices;
 using SprintApp.Core.Models;
 using SprintApp.Infrastructure.Data;
 using System.Security.Cryptography;
@@ -8,7 +10,7 @@ using System.Text;
 
 namespace SprintApp.Services.Services
 {
-    public class ProjectManagerService
+    public class ProjectManagerService : IProjectManagerService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ApplicationDbContext _contex;
@@ -21,14 +23,25 @@ namespace SprintApp.Services.Services
 
         #region Public Methods
 
+
+        /// <summary>
+        /// Method to register new user
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public async Task<string> RegisterManager(RegistrationDto obj)
         {
-            var temp = await _unitOfWork.projectManagerRepo.GetAllAsync();
             if (obj == null)
             {
                 return ConstantMessage.Unsuccessful;
             }
             EncriptPassword(obj.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            List<ProjectManager> item = _contex.ProjectManagers.ToList();
+            var myList = new List<string>();
+            foreach (var manager in item) 
+            {
+                myList.Add(manager.ManagerId);
+            }
             var user = new ProjectManager
             {
                 EmailId = obj.EmailId,
@@ -36,7 +49,7 @@ namespace SprintApp.Services.Services
                 PasswordSalt = passwordSalt,
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
-                ManagerId = _contex.ProjectManagers.ToList()[0].ManagerId == null ? "ADMAA0001A" : await GenerateCode("admin", _contex.ProjectManagers.Select(x=> x.ManagerId).ToList(), 3),
+                ManagerId = await GenerateCode("admin", myList, 3),
                 VerificationToken = await GenerateToken(),
                 LoginAtempt = 3
             };
@@ -45,10 +58,38 @@ namespace SprintApp.Services.Services
             return ConstantMessage.RegistrationSuccess;
         }
 
+        public async Task<string> Login (LoginDto dto)
+        {
+            if (dto == null)
+            {
+                return ConstantMessage.Unsuccessful;
+            }
+            var user = await _contex.ProjectManagers.FirstOrDefaultAsync(x=> x.EmailId == dto.EmailId);
+            if (user == null)
+            {
+                return ConstantMessage.InvalidUser;
+            }
+            var verify = VerifyPassword(dto.Password, user.PasswordHash, user.PasswordSalt);
+            if (!verify)
+            {
+                user.LoginAtempt--;
+                if (user.LoginAtempt <= 0)
+                {
+                    user.LogoutTime = DateTime.UtcNow.AddMinutes(30);
+                }
+            }
+            return ConstantMessage.RegistrationSuccess;
+        }
+
         #endregion Public Methods
 
         #region Private Methods
-
+        /// <summary>
+        /// Method to encript password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="passwordHash"></param>
+        /// <param name="passwordSalt"></param>
         private void EncriptPassword(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using(var hmac = new HMACSHA512())
@@ -58,6 +99,16 @@ namespace SprintApp.Services.Services
             }
         }
 
+        /// <summary>
+        /// Method to generate User IDs
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="_service"></param>
+        /// <param name="charLength"></param>
+        /// <param name="firstIndex"></param>
+        /// <param name="secondIndex"></param>
+        /// <param name="startIndex"></param>
+        /// <returns></returns>
         private async Task<string> GenerateCode(string name, List<string> _service, int charLength, int firstIndex = 2, int secondIndex = 3, int startIndex = 4)
         {
 
@@ -89,13 +140,23 @@ namespace SprintApp.Services.Services
             return (name.Substring(0, charLength).ToUpper() + firstChar + secondChar + (num + 1).ToString("D4") + thirdChar);
         }
 
+        /// <summary>
+        /// Method to generate randome token
+        /// </summary>
+        /// <returns></returns>
         private async Task<string> GenerateToken()
         {
             return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
         }
        
 
-
+        /// <summary>
+        /// Method to verify password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="passwordHash"></param>
+        /// <param name="passwordSalt"></param>
+        /// <returns></returns>
         private bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using(var hmac = new HMACSHA512(passwordSalt))

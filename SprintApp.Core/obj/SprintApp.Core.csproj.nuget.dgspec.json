@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj": {}
+    "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj": {
+    "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj",
+        "projectUniqueName": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj",
         "projectName": "SprintApp.Core",
-        "projectPath": "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj",
+        "projectPath": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Core\\SprintApp.Core.csproj",
         "packagesPath": "C:\\Users\\adediranma\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\adediranma\\Desktop\\SprintApp\\SprintApp.Core\\obj\\",
+        "outputPath": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

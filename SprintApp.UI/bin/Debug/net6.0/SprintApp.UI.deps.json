@@ -14,7 +14,8 @@
           "Microsoft.EntityFrameworkCore.Tools": "6.0.18",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.14",
           "SprintApp.Core": "1.0.0",
-          "SprintApp.Infrastructure": "1.0.0"
+          "SprintApp.Infrastructure": "1.0.0",
+          "SprintApp.Services": "1.0.0"
         },
         "runtime": {
           "SprintApp.UI.dll": {}
@@ -2669,10 +2670,21 @@
       "SprintApp.Infrastructure/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "6.0.19",
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.19",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.18",
           "SprintApp.Core": "1.0.0"
         },
         "runtime": {
           "SprintApp.Infrastructure.dll": {}
+        }
+      },
+      "SprintApp.Services/1.0.0": {
+        "dependencies": {
+          "SprintApp.Core": "1.0.0",
+          "SprintApp.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "SprintApp.Services.dll": {}
         }
       }
     }
@@ -4250,6 +4262,11 @@
       "sha512": ""
     },
     "SprintApp.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SprintApp.Services/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
