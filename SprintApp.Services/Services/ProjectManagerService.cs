@@ -57,7 +57,11 @@ namespace SprintApp.Services.Services
             await _unitOfWork.SaveChangesAsync();
             return ConstantMessage.RegistrationSuccess;
         }
-
+        /// <summary>
+        /// Method to log user in
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public async Task<string> Login (LoginDto dto)
         {
             if (dto == null)
