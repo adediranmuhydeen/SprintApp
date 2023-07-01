@@ -1,0 +1,33 @@
+﻿@using SprintApp.Core.Dtos;
+@model LoginDto
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="text-center">
+            <h2 class="display-3">Login</h2>
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="EmailId">Email address</label>
+            <input asp-for="EmailId" class="form-control" />
+            <span asp-validation-for="EmailId" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password">Password</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
