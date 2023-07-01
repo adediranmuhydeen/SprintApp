@@ -28,7 +28,41 @@ namespace SprintApp.UI.Controllers
             {
                 return BadRequest(result);
             }
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        //Post
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDto dto)
+        {
+            var result = await _service.Login(dto);
+            if (result == ConstantMessage.TokenExpired)
+            {
+                return RedirectToAction("Verify");
+            }
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Verify()
+        {
+            return View();
+        }
+
+        //Post
+        [HttpPost]
+        public async Task<IActionResult> Verify(VerificationDto dto)
+        {
+            var result = await _service.VerifyUser(dto);
+            if (result != ConstantMessage.CompleteRequest)
+            {
+                return BadRequest(result);
+            }
+            return RedirectToAction("Login");
         }
     }
 }

@@ -9,7 +9,7 @@ namespace SprintApp.Core.Models
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? EmailId { get; set; } = string.Empty;
+        public string EmailId { get; set; } = string.Empty;
         public string? UserName { get; set; }
         public string ManagerId { get; set; } = string.Empty;
         public byte[] PasswordHash { get; set; } = new byte[32];
