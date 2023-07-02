@@ -65,10 +65,19 @@ namespace SprintApp.Services.Services
 
         public async Task<string> VerifyUser(VerificationDto dto)
         {
-            var user = await _unitOfWork.projectManagerRepo.GetAsync(x=>x.EmailId == dto.EmailId && x.VerificationToken == dto.VerificationToken);
+            var user = await _unitOfWork.projectManagerRepo.GetAsync(x=>x.EmailId == dto.EmailId);
             if (user == null)
-            {
+            {                
                 return ConstantMessage.InvalidUser;
+            }
+            if(dto.VerificationToken != user.VerificationToken)
+            {
+                user.LoginAtempt--;
+                user.VerificationToken = await GenerateToken();
+                user.VarificationTokenExpires = DateTime.UtcNow.AddMinutes(30);
+                _unitOfWork.projectManagerRepo.Update(user);
+                await _unitOfWork.SaveChangesAsync();
+                return ConstantMessage.InvalidToken;
             }
             if(user.VarificationTokenExpires < DateTime.UtcNow)
             {
@@ -77,9 +86,16 @@ namespace SprintApp.Services.Services
                 {
                     user.LogoutTime = DateTime.Now.AddMinutes(2);
                     user.LoginAtempt = 3;
+                    user.VerificationToken = await GenerateToken();
+                    user.VarificationTokenExpires = DateTime.UtcNow.AddMinutes(30);
+                    _unitOfWork.projectManagerRepo.Update(user);
                     await _unitOfWork.SaveChangesAsync();
                     return ConstantMessage.LockedUser;
                 }
+                user.VerificationToken = await GenerateToken();
+                user.VarificationTokenExpires = DateTime.UtcNow.AddMinutes(30);
+                _unitOfWork.projectManagerRepo.Update(user);
+                await _unitOfWork.SaveChangesAsync();
                 return ConstantMessage.TokenExpired;
             }
 
@@ -87,8 +103,15 @@ namespace SprintApp.Services.Services
             user.VerifiedAt = DateTime.UtcNow;
             user.VerificationToken = await GenerateToken();
             user.VarificationTokenExpires = DateTime.UtcNow.AddMinutes(30);
+            _unitOfWork.projectManagerRepo.Update(user);
             await _unitOfWork.SaveChangesAsync();
             return ConstantMessage.CompleteRequest;
+        }
+
+
+        public async Task<ProjectManager> GetProjectManagerAsync(string Email)
+        {
+            return await _unitOfWork.projectManagerRepo.GetAsync(x=> x.EmailId == Email);
         }
 
 
@@ -110,24 +133,29 @@ namespace SprintApp.Services.Services
             }
             if (!VerifyPassword(dto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                user.LoginAtempt--;
+                
                 if (user.LoginAtempt <= 0)
                 {
                     user.LogoutTime = DateTime.UtcNow.AddMinutes(2);
                     user.LoginAtempt = 3;
+                    _unitOfWork.projectManagerRepo.Update(user);
                     await _unitOfWork.SaveChangesAsync();
                     return ConstantMessage.LockedUser;
                 }
+                user.LoginAtempt--;
+                 _unitOfWork.projectManagerRepo.Update(user);
+                await _unitOfWork.SaveChangesAsync();
                 return ConstantMessage.InvalidUser;
             }
             if (user.VerifiedAt == null)
             {
-                SendEmail(user.VerificationToken, user.EmailId);
+                //SendEmail(user.VerificationToken, user.EmailId);
                 user.LoginAtempt--;
                 if (user.LoginAtempt <= 0)
                 {
                     user.LogoutTime = DateTime.Now.AddMinutes(2);
                     user.LoginAtempt = 3;
+                    _unitOfWork.projectManagerRepo.Update(user);
                     await _unitOfWork.SaveChangesAsync();
                     return ConstantMessage.LockedUser;
                 }
@@ -140,6 +168,7 @@ namespace SprintApp.Services.Services
             user.LoginAtempt = 3;
             user.LogoutTime = null;
             user.VerifiedAt = null;
+            _unitOfWork.projectManagerRepo.Update(user);
             await _unitOfWork.SaveChangesAsync();
             return ConstantMessage.CompleteRequest;
         }
@@ -232,7 +261,7 @@ namespace SprintApp.Services.Services
         public void SendEmail(string verificationToken, string emailAddress)
         {
             var email = new MimeMessage();
-            email.From.Add(MailboxAddress.Parse("nakia.brekke@ethereal.email"));
+            email.From.Add(MailboxAddress.Parse("paolo69@ethereal.email"));
             email.To.Add(MailboxAddress.Parse(emailAddress));
             email.Subject = "User verification";
             email.Body = new TextPart(TextFormat.Html)
@@ -242,7 +271,7 @@ namespace SprintApp.Services.Services
             };
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.ethereal.email", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("nakia.brekke@ethereal.email", "n5NbQ8tPcJ4qTUET8X");
+            smtp.Authenticate("paolo69@ethereal.email", "3ruk9dJAtmCfj8YAyp");
             smtp.Send(email);
             smtp.Disconnect(true);
         }
