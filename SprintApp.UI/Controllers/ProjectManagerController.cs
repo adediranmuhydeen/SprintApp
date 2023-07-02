@@ -2,6 +2,8 @@
 using SprintApp.Core.Dtos;
 using SprintApp.Core.Helper;
 using SprintApp.Core.IServices;
+using SprintApp.Core.Models;
+#nullable disable
 
 namespace SprintApp.UI.Controllers
 {
@@ -12,6 +14,30 @@ namespace SprintApp.UI.Controllers
         public ProjectManagerController(IProjectManagerService service)
         {
             _service = service;
+        }
+
+        public async Task<IActionResult> Get(string Email)
+        {
+            if (Email == null)
+            {
+                return NotFound();
+            }
+            var result = await _service.GetProjectManagerAsync(Email);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Get(ProjectManager obj)
+        {
+            if (ModelState.IsValid)
+            {
+                return View(obj.UserStories.ToList());
+            }
+            return View(obj.UserStories.ToList());
         }
 
         public IActionResult Register()
@@ -45,7 +71,11 @@ namespace SprintApp.UI.Controllers
             {
                 return RedirectToAction("Verify");
             }
-            return RedirectToAction("Index", "Home");
+            if(result != ConstantMessage.CompleteRequest)
+            {
+                return View();
+            }
+            return RedirectToAction("Get", "ProjectManager");
         }
 
         public IActionResult Verify()

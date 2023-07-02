@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TlQHVpY+GquDgHhv/q28ee9P9xvJrOH86xzZXcgSMmA=",
+  "Hash": "noYXSYByXLnQEAIaMX8GHu4WBKh2J6gYjXf/H67T97A=",
   "Source": "SprintApp.UI",
   "BasePath": "_content/SprintApp.UI",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\Theme.css"
+    },
+    {
+      "Identity": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.UI\\wwwroot\\css\\Theme2.css",
+      "SourceId": "SprintApp.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.UI\\wwwroot\\",
+      "BasePath": "_content/SprintApp.UI",
+      "RelativePath": "css/Theme2.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Theme2.css"
     },
     {
       "Identity": "C:\\Users\\adediranma\\Desktop\\Planing\\SprintApp\\SprintApp.UI\\wwwroot\\favicon.ico",
