@@ -167,7 +167,7 @@ namespace SprintApp.Services.Services
             }
             user.LoginAtempt = 3;
             user.LogoutTime = null;
-            user.VerifiedAt = null;
+            //user.VerifiedAt = null;
             _unitOfWork.projectManagerRepo.Update(user);
             await _unitOfWork.SaveChangesAsync();
             return ConstantMessage.CompleteRequest;
