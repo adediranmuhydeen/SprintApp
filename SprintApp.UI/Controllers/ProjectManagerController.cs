@@ -64,18 +64,18 @@ namespace SprintApp.UI.Controllers
 
         //Post
         [HttpPost]
-        public async Task<IActionResult> Login(LoginDto dto)
+        public async Task<ActionResult<LoginDto>> Login(LoginDto dto)
         {
             var result = await _service.Login(dto);
             if (result == ConstantMessage.TokenExpired)
             {
                 return RedirectToAction("Verify");
             }
-            if(result != ConstantMessage.CompleteRequest)
+            if (result != ConstantMessage.CompleteRequest)
             {
-                return View();
+                return BadRequest(result);
             }
-            return RedirectToAction("Get", "ProjectManager");
+            return RedirectToAction("Get");
         }
 
         public IActionResult Verify()
