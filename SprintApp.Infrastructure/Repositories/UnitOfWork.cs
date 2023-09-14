@@ -12,7 +12,7 @@ namespace SprintApp.Infrastructure.Repositories
         protected ISprintRepo _sprintRepo;
         protected IUserStoryRepo _userStoryRepo;
         private readonly ApplicationDbContext _context;
-        private bool _disposed;
+        private bool _disposed = true;
         #endregion Private Properties
 
         #region Constructor
