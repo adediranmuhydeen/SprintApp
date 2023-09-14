@@ -16,13 +16,10 @@ namespace SprintApp.UI.Controllers
             _service = service;
         }
 
-        public async Task<IActionResult> Get(string Email)
+        public async Task<ActionResult<ProjectManager>> ProjectManagerLandingPage(string email)
         {
-            if (Email == null)
-            {
-                return NotFound();
-            }
-            var result = await _service.GetProjectManagerAsync(Email);
+            
+            var result = await _service.GetProjectManagerAsync(email);
             if (result == null)
             {
                 return NotFound();
@@ -31,13 +28,10 @@ namespace SprintApp.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Get(ProjectManager obj)
+        public IActionResult ProjectManagerLandingPage()
         {
-            if (ModelState.IsValid)
-            {
-                return View(obj.UserStories.ToList());
-            }
-            return View(obj.UserStories.ToList());
+            
+            return View();
         }
 
         public IActionResult Register()
@@ -71,11 +65,11 @@ namespace SprintApp.UI.Controllers
             {
                 return RedirectToAction("Verify");
             }
-            if (result != ConstantMessage.CompleteRequest)
+            if (result == ConstantMessage.CompleteRequest)
             {
-                return BadRequest(result);
+                return View("ProjectManagerLandingPage");
             }
-            return RedirectToAction("Get");
+            return RedirectToAction("Home/Index");
         }
 
         public IActionResult Verify()
@@ -88,6 +82,10 @@ namespace SprintApp.UI.Controllers
         public async Task<IActionResult> Verify(VerificationDto dto)
         {
             var result = await _service.VerifyUser(dto);
+            if( result == ConstantMessage.InvalidToken)
+            {
+                return RedirectToAction("Verify");
+            }
             if (result != ConstantMessage.CompleteRequest)
             {
                 return BadRequest(result);

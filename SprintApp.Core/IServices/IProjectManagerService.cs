@@ -8,6 +8,6 @@ namespace SprintApp.Core.IServices
         Task<string> RegisterManager(RegistrationDto obj);
         Task<string> Login(LoginDto dto);
         Task<string> VerifyUser(VerificationDto dto);
-        Task<ProjectManager> GetProjectManagerAsync(string Email);
+        Task<GetProjectManagerDto> GetProjectManagerAsync(string Email);
     }
 }

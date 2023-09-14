@@ -109,9 +109,19 @@ namespace SprintApp.Services.Services
         }
 
 
-        public async Task<ProjectManager> GetProjectManagerAsync(string Email)
+        public async Task<GetProjectManagerDto> GetProjectManagerAsync(string Email)
         {
-            return await _unitOfWork.projectManagerRepo.GetAsync(x=> x.EmailId == Email);
+            var result = await _unitOfWork.projectManagerRepo.GetAsync(x=> x.EmailId == Email)?? new ProjectManager();
+            return new GetProjectManagerDto
+            {
+                FirstName = result.FirstName,
+                LastName = result.LastName,
+                EmailId = result.EmailId,
+                UserName = result.UserName,
+                UserStories = await _unitOfWork.userStoryRepo.GetAllAsync(x => x.ManagerId == result.ManagerId) ?? new List<UserStory>(),
+                Voters = await _unitOfWork.voterRepo.GetAllAsync(x => x.ManagerId == result.ManagerId) ?? new List<Voter>(),
+                Sprints = await _unitOfWork.sprintRepo.GetAllAsync(x => x.ManagerId == result.ManagerId),
+            }?? new GetProjectManagerDto();
         }
 
 
