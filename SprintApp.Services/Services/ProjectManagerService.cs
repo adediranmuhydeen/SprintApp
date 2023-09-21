@@ -1,4 +1,5 @@
-﻿using MailKit.Net.Smtp;
+﻿using AutoMapper;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
@@ -17,6 +18,7 @@ namespace SprintApp.Services.Services
     public class ProjectManagerService : IProjectManagerService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
         public ProjectManagerService(IUnitOfWork unitOfWork)
         {
@@ -114,6 +116,7 @@ namespace SprintApp.Services.Services
             var result = await _unitOfWork.projectManagerRepo.GetAsync(x=> x.EmailId == Email)?? new ProjectManager();
             return new GetProjectManagerDto
             {
+                Id = result.Id,
                 FirstName = result.FirstName,
                 LastName = result.LastName,
                 EmailId = result.EmailId,
@@ -130,16 +133,13 @@ namespace SprintApp.Services.Services
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public async Task<string> Login (LoginDto dto)
+        public async Task<ProjectManager> Login (LoginDto dto)
         {
-            if (dto == null)
-            {
-                return ConstantMessage.Unsuccessful;
-            }
+           
             var user = await _unitOfWork.projectManagerRepo.GetAsync(x=> x.EmailId == dto.EmailId);
             if (user == null)
             {
-                return ConstantMessage.InvalidUser;
+                return null;
             }
             if (!VerifyPassword(dto.Password, user.PasswordHash, user.PasswordSalt))
             {
@@ -150,12 +150,13 @@ namespace SprintApp.Services.Services
                     user.LoginAtempt = 3;
                     _unitOfWork.projectManagerRepo.Update(user);
                     await _unitOfWork.SaveChangesAsync();
-                    return ConstantMessage.LockedUser;
+                    return user;
+                    //return ConstantMessage.LockedUser;
                 }
                 user.LoginAtempt--;
                  _unitOfWork.projectManagerRepo.Update(user);
                 await _unitOfWork.SaveChangesAsync();
-                return ConstantMessage.InvalidUser;
+                return user;
             }
             if (user.VerifiedAt == null)
             {
@@ -167,20 +168,20 @@ namespace SprintApp.Services.Services
                     user.LoginAtempt = 3;
                     _unitOfWork.projectManagerRepo.Update(user);
                     await _unitOfWork.SaveChangesAsync();
-                    return ConstantMessage.LockedUser;
+                    return user;
                 }
-                return ConstantMessage.TokenExpired;
+                return user;
             }
             if(user.LogoutTime > DateTime.UtcNow && user.LogoutTime != null)
             {
-                return ConstantMessage.LockedUser;
+                return user;
             }
             user.LoginAtempt = 3;
             user.LogoutTime = null;
             //user.VerifiedAt = null;
             _unitOfWork.projectManagerRepo.Update(user);
             await _unitOfWork.SaveChangesAsync();
-            return ConstantMessage.CompleteRequest;
+            return user;
         }
 
         #endregion Public Methods

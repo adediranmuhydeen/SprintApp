@@ -61,15 +61,19 @@ namespace SprintApp.UI.Controllers
         public async Task<ActionResult<LoginDto>> Login(LoginDto dto)
         {
             var result = await _service.Login(dto);
-            if (result == ConstantMessage.TokenExpired)
+            if (result.VarificationTokenExpires <= DateTime.Now)
             {
-                return RedirectToAction("Verify");
+                return BadRequest(ConstantMessage.TokenExpired);
             }
-            if (result == ConstantMessage.CompleteRequest)
+            if (result.LogoutTime> DateTime.UtcNow && result.LogoutTime != null)
             {
-                return View("ProjectManagerLandingPage");
+                return BadRequest(ConstantMessage.LockedUser);
             }
-            return RedirectToAction("Home/Index");
+            if(result.VerifiedAt == null)
+            {
+                return View("Verify");
+            }
+            return View("ProjectManagerLandingPage");
         }
 
         public IActionResult Verify()
