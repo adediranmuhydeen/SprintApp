@@ -1,8 +1,57 @@
-﻿@using SprintApp.Core.Models;
+﻿@using SprintApp.Core.Dtos;
+@using SprintApp.Core.Models;
 @model ProjectManager
 @{
     ViewData["Title"] = "ProjectManagerLandingPage";
 }
-
+<table method="post" asp-action="ProjectManagerLandingPage"></table>
 <h1>Welcome @Model.FirstName, @Model.LastName </h1>
 
+@foreach(var item in Model.UserStories)
+{
+    var userStrory = new UserStoryDto
+    {
+        Title = item.Title,
+        Description = item.Description,
+        SprintId = item.SprintId
+    };
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Descripion
+                </th>
+                <th>
+                    Id
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td width="30%">
+                    @userStrory.Title
+                </td>
+                <td width="30%">
+                    @userStrory.Description
+                </td>
+                <td width="30%">
+                    @userStrory.SprintId
+                </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="ProjectManager" asp-action="ProjectManagerLandingPage" asp-route-Id="@Model.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i></a>
+                    </div>
+                </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="ProjectManager" asp-action="ProjectManagerLandingPage" asp-route-Id="@Model.Id" class="btn btn-primary mx-2 btn-danger"><i class="bi bi-trash3"></i></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+};

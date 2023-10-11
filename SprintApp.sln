@@ -5,11 +5,13 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SprintApp.UI", "SprintApp.UI\SprintApp.UI.csproj", "{9D075A70-136F-4AC6-BF82-B60FAE56E890}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintApp.Core", "SprintApp.Core\SprintApp.Core.csproj", "{7FD1C253-9754-40A7-AE70-6AB20659138E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SprintApp.Core", "SprintApp.Core\SprintApp.Core.csproj", "{7FD1C253-9754-40A7-AE70-6AB20659138E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintApp.Infrastructure", "SprintApp.Infrastructure\SprintApp.Infrastructure.csproj", "{70DC75AC-1881-4653-B52B-25D0EE1CC060}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SprintApp.Infrastructure", "SprintApp.Infrastructure\SprintApp.Infrastructure.csproj", "{70DC75AC-1881-4653-B52B-25D0EE1CC060}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintApp.Services", "SprintApp.Services\SprintApp.Services.csproj", "{5E21985B-C009-45C4-AF39-CB13D67BE012}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SprintApp.Services", "SprintApp.Services\SprintApp.Services.csproj", "{5E21985B-C009-45C4-AF39-CB13D67BE012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SprintApp.Api", "SprintApp.Api\SprintApp.Api.csproj", "{F34716B7-7A20-4EA6-BA10-9D36B029E11A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5E21985B-C009-45C4-AF39-CB13D67BE012}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E21985B-C009-45C4-AF39-CB13D67BE012}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E21985B-C009-45C4-AF39-CB13D67BE012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F34716B7-7A20-4EA6-BA10-9D36B029E11A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F34716B7-7A20-4EA6-BA10-9D36B029E11A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F34716B7-7A20-4EA6-BA10-9D36B029E11A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F34716B7-7A20-4EA6-BA10-9D36B029E11A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

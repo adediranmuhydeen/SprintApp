@@ -5,7 +5,7 @@
 }
 
 
-<form method="post">
+<form method="get">
     <div class="border p-3 mt-4">
         <div class="text-center">
             <h2 class="display-3">Login</h2>
@@ -21,7 +21,7 @@
             <input asp-for="Password" type="password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <button asp-action="ProjectManagerLandingPage" type="submit" class="btn btn-primary" asp-route-id="@Model.EmailId">Login</button>
+        <a asp-controller="ProjectManager" asp-action="ProjectManagerLandingPage" type="submit" class="btn btn-primary">Login</a>
     </div>
 </form>
 @* <div>

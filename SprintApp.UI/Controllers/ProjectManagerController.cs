@@ -27,11 +27,11 @@ namespace SprintApp.UI.Controllers
             return View(result);
         }
 
-        [HttpPost]
-        public IActionResult ProjectManagerLandingPage()
+        [HttpGet]
+        public IActionResult ProjectManagerLandingPage(ProjectManager obj)
         {
             
-            return View();
+            return View(obj);
         }
 
         public IActionResult Register()
@@ -57,24 +57,20 @@ namespace SprintApp.UI.Controllers
         }
 
         //Post
-        [HttpPost]
-        public async Task<ActionResult<LoginDto>> Login(LoginDto dto)
-        {
-            var result = await _service.Login(dto);
-            if (result.VarificationTokenExpires <= DateTime.Now)
-            {
-                return BadRequest(ConstantMessage.TokenExpired);
-            }
-            if (result.LogoutTime> DateTime.UtcNow && result.LogoutTime != null)
-            {
-                return BadRequest(ConstantMessage.LockedUser);
-            }
-            if(result.VerifiedAt == null)
-            {
-                return View("Verify");
-            }
-            return View("ProjectManagerLandingPage");
-        }
+        //[HttpPost]
+        //public async Task<ActionResult<LoginDto>> Login(LoginDto dto)
+        //{
+        //    var result = await _service.Login(dto);
+        //    if (result.LogoutTime > DateTime.UtcNow && result.LogoutTime != null)
+        //    {
+        //        return BadRequest(ConstantMessage.LockedUser);
+        //    }
+        //    if (result.VerifiedAt == null)
+        //    {
+        //        return View("Verify");
+        //    }
+        //    return RedirectToAction("ProjectManagerLandingPage");
+        //}
 
         public IActionResult Verify()
         {

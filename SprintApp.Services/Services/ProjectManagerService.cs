@@ -44,7 +44,11 @@ namespace SprintApp.Services.Services
             EncriptPassword(obj.Password, out byte[] passwordHash, out byte[] passwordSalt);
             List<ProjectManager> item = await _unitOfWork.projectManagerRepo.GetAllAsync();
             var myList = new List<string>();
-            foreach (var manager in item) 
+            if (myList == null)
+            {
+                myList.Add("ADMAA0001A");
+            }
+            foreach (var manager in item)
             {
                 myList.Add(manager.ManagerId);
             }
@@ -55,7 +59,7 @@ namespace SprintApp.Services.Services
                 PasswordSalt = passwordSalt,
                 FirstName = obj.FirstName,
                 LastName = obj.LastName,
-                ManagerId = await GenerateCode("admin", myList, 3),
+                ManagerId = "ADMAA0001A",//await GenerateCode("admin", myList, 3),
                 VerificationToken = await GenerateToken(),
                 VarificationTokenExpires = DateTime.UtcNow.AddMinutes(30),
                 LoginAtempt = 3
@@ -116,7 +120,7 @@ namespace SprintApp.Services.Services
             var result = await _unitOfWork.projectManagerRepo.GetAsync(x=> x.EmailId == Email)?? new ProjectManager();
             return new GetProjectManagerDto
             {
-                Id = result.Id,
+                ManagerId = result.ManagerId,
                 FirstName = result.FirstName,
                 LastName = result.LastName,
                 EmailId = result.EmailId,
@@ -133,13 +137,13 @@ namespace SprintApp.Services.Services
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public async Task<ProjectManager> Login (LoginDto dto)
+        public async Task<string> Login (LoginDto dto)
         {
            
             var user = await _unitOfWork.projectManagerRepo.GetAsync(x=> x.EmailId == dto.EmailId);
             if (user == null)
             {
-                return null;
+                return ConstantMessage.InvalidUser;
             }
             if (!VerifyPassword(dto.Password, user.PasswordHash, user.PasswordSalt))
             {
@@ -150,13 +154,12 @@ namespace SprintApp.Services.Services
                     user.LoginAtempt = 3;
                     _unitOfWork.projectManagerRepo.Update(user);
                     await _unitOfWork.SaveChangesAsync();
-                    return user;
-                    //return ConstantMessage.LockedUser;
+                    return ConstantMessage.LockedUser;
                 }
                 user.LoginAtempt--;
-                 _unitOfWork.projectManagerRepo.Update(user);
+                _unitOfWork.projectManagerRepo.Update(user);
                 await _unitOfWork.SaveChangesAsync();
-                return user;
+                return ConstantMessage.InvalidUser;
             }
             if (user.VerifiedAt == null)
             {
@@ -168,20 +171,20 @@ namespace SprintApp.Services.Services
                     user.LoginAtempt = 3;
                     _unitOfWork.projectManagerRepo.Update(user);
                     await _unitOfWork.SaveChangesAsync();
-                    return user;
+                    return ConstantMessage.LockedUser;
                 }
-                return user;
+                return ConstantMessage.UnverifiedUser;
             }
             if(user.LogoutTime > DateTime.UtcNow && user.LogoutTime != null)
             {
-                return user;
+                return ConstantMessage.LockedUser;
             }
             user.LoginAtempt = 3;
             user.LogoutTime = null;
             //user.VerifiedAt = null;
             _unitOfWork.projectManagerRepo.Update(user);
             await _unitOfWork.SaveChangesAsync();
-            return user;
+            return $"{ConstantMessage.Welcome} {user.FirstName}, {user.LastName}";
         }
 
         #endregion Public Methods
@@ -280,11 +283,12 @@ namespace SprintApp.Services.Services
                 Text = $"Your verification token is " +
                 $"<h1><b>{verificationToken}<b></h1>, \nkindly copy and paste it in the appropriate box"
             };
-            using var smtp = new SmtpClient();
-            smtp.Connect("smtp.ethereal.email", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("paolo69@ethereal.email", "3ruk9dJAtmCfj8YAyp");
-            smtp.Send(email);
-            smtp.Disconnect(true);
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Connect("in-v3.mailjet.com", 587, SecureSocketOptions.StartTls);
+                smtp.Authenticate("adediranmuhydeen@gmail.com", "3ruk9dJAtmCfj8YAyp");
+                smtp.Send(email);
+            };
         }
 
         #endregion Private Methods
