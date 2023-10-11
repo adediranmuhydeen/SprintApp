@@ -4,7 +4,7 @@
 
 namespace SprintApp.Infrastructure.Migrations
 {
-    public partial class first : Migration
+    public partial class second : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,13 +12,12 @@ namespace SprintApp.Infrastructure.Migrations
                 name: "ProjectManagers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ManagerId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ManagerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     ResetToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -38,17 +37,17 @@ namespace SprintApp.Infrastructure.Migrations
                 name: "Sprints",
                 columns: table => new
                 {
-                    SprintId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Ìd = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SprintId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ManagerId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectManagerId = table.Column<int>(type: "int", nullable: true)
+                    ProjectManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sprints", x => x.SprintId);
+                    table.PrimaryKey("PK_Sprints", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Sprints_ProjectManagers_ProjectManagerId",
                         column: x => x.ProjectManagerId,
@@ -60,14 +59,14 @@ namespace SprintApp.Infrastructure.Migrations
                 name: "UserStorys",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StoryId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SprintId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SprintId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ManagerId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectManagerId = table.Column<int>(type: "int", nullable: true)
+                    ProjectManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SprintId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -78,24 +77,23 @@ namespace SprintApp.Infrastructure.Migrations
                         principalTable: "ProjectManagers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_UserStorys_Sprints_SprintId",
-                        column: x => x.SprintId,
+                        name: "FK_UserStorys_Sprints_SprintId1",
+                        column: x => x.SprintId1,
                         principalTable: "Sprints",
-                        principalColumn: "SprintId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Voters",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VotedPoint = table.Column<int>(type: "int", nullable: false),
                     VoterId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ManagerId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectManagerId = table.Column<int>(type: "int", nullable: true),
-                    UserStoryId = table.Column<int>(type: "int", nullable: true)
+                    ProjectManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserStoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -116,12 +114,11 @@ namespace SprintApp.Infrastructure.Migrations
                 name: "Votes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Value = table.Column<int>(type: "int", nullable: false),
                     VoterId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SprintId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    VoterId1 = table.Column<int>(type: "int", nullable: true)
+                    SprintId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    VoterId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -130,7 +127,7 @@ namespace SprintApp.Infrastructure.Migrations
                         name: "FK_Votes_Sprints_SprintId",
                         column: x => x.SprintId,
                         principalTable: "Sprints",
-                        principalColumn: "SprintId");
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Votes_Voters_VoterId1",
                         column: x => x.VoterId1,
@@ -149,9 +146,9 @@ namespace SprintApp.Infrastructure.Migrations
                 column: "ProjectManagerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserStorys_SprintId",
+                name: "IX_UserStorys_SprintId1",
                 table: "UserStorys",
-                column: "SprintId");
+                column: "SprintId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Voters_ProjectManagerId",

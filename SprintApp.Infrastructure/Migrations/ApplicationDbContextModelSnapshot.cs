@@ -17,20 +17,19 @@ namespace SprintApp.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.19")
+                .HasAnnotation("ProductVersion", "6.0.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("SprintApp.Core.Models.ProjectManager", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("EmailId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -46,6 +45,7 @@ namespace SprintApp.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ManagerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("PasswordHash")
@@ -81,8 +81,9 @@ namespace SprintApp.Infrastructure.Migrations
 
             modelBuilder.Entity("SprintApp.Core.Models.Sprint", b =>
                 {
-                    b.Property<string>("SprintId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -93,16 +94,16 @@ namespace SprintApp.Infrastructure.Migrations
                     b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProjectManagerId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ProjectManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SprintId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Ìd")
-                        .HasColumnType("int");
-
-                    b.HasKey("SprintId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProjectManagerId");
 
@@ -111,11 +112,9 @@ namespace SprintApp.Infrastructure.Migrations
 
             modelBuilder.Entity("SprintApp.Core.Models.UserStory", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -123,11 +122,14 @@ namespace SprintApp.Infrastructure.Migrations
                     b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProjectManagerId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ProjectManagerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SprintId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SprintId1")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("StoryId")
                         .HasColumnType("nvarchar(max)");
@@ -139,21 +141,19 @@ namespace SprintApp.Infrastructure.Migrations
 
                     b.HasIndex("ProjectManagerId");
 
-                    b.HasIndex("SprintId");
+                    b.HasIndex("SprintId1");
 
                     b.ToTable("UserStorys");
                 });
 
             modelBuilder.Entity("SprintApp.Core.Models.Vote", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("SprintId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("SprintId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Value")
                         .HasColumnType("int");
@@ -161,8 +161,8 @@ namespace SprintApp.Infrastructure.Migrations
                     b.Property<string>("VoterId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VoterId1")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("VoterId1")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -175,11 +175,9 @@ namespace SprintApp.Infrastructure.Migrations
 
             modelBuilder.Entity("SprintApp.Core.Models.Voter", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(max)");
@@ -187,11 +185,11 @@ namespace SprintApp.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProjectManagerId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ProjectManagerId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("UserStoryId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserStoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("VotedPoint")
                         .HasColumnType("int");
@@ -223,7 +221,7 @@ namespace SprintApp.Infrastructure.Migrations
 
                     b.HasOne("SprintApp.Core.Models.Sprint", null)
                         .WithMany("UserStories")
-                        .HasForeignKey("SprintId");
+                        .HasForeignKey("SprintId1");
                 });
 
             modelBuilder.Entity("SprintApp.Core.Models.Vote", b =>
